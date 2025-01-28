@@ -54,7 +54,7 @@ https://www.tiktok.com/@kunttycat/video/7428903489788595476
 
 ### 2. Clone Repository
 ```bash
-git clone https://github.com/username/file-encryption-app.git
+git clone
 cd file-encryption-app
 ```
 
