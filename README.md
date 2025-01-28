@@ -55,7 +55,7 @@ https://www.tiktok.com/@kunttycat/video/7428903489788595476
 ### 2. Clone Repository
 ```bash
 git clone
-cd file-encryption-app
+cd android-encrypted-galeri
 ```
 
 ### 3. Endpoint API yang Dibutuhkan
