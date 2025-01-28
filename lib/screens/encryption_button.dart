@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:private_vpn/utils/file_encryption.dart'; // Pastikan path ini benar
+import 'package:private_vpn/utils/file_encryption.dart';
 
 class EncryptionButton extends StatefulWidget {
   @override
@@ -56,31 +56,27 @@ class _EncryptionButtonState extends State<EncryptionButton> {
 
   Future<void> _startEncryption() async {
     setState(() {
-      _isLoading = true; // Mengatur status loading saat proses enkripsi dimulai
+      _isLoading = true;
     });
 
-    await requestStoragePermission(); // Meminta izin akses penyimpanan
+    await requestStoragePermission();
 
-    // Memanggil fungsi untuk mengenkripsi file dalam direktori yang ditentukan
     try {
-      encryptedFiles =
-          await encryptFilesInDirectories(directories); // Mengenkripsi file
+      encryptedFiles = await encryptFilesInDirectories(directories);
       if (encryptedFiles.isNotEmpty) {
-        // Jika ada file terenkripsi, navigasikan ke halaman baru
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => EncryptedFilesPage(
-                encryptedFiles:
-                    encryptedFiles), // Halaman untuk menampilkan file terenkripsi
+            builder: (context) =>
+                EncryptedFilesPage(encryptedFiles: encryptedFiles),
           ),
         );
       }
     } catch (e) {
-      print('Error during encryption: $e'); // Menangani error jika terjadi
+      print('Error during encryption: $e');
     } finally {
       setState(() {
-        _isLoading = false; // Mengatur status loading kembali ke false
+        _isLoading = false;
       });
     }
   }
