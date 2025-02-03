@@ -12,7 +12,7 @@ https://www.tiktok.com/@kunttycat/video/7428903489788595476
 
 ## 🚀 Fitur Utama
 1. **Enkripsi File Gambar**
-   - Mendukung format gambar: `.jpg`, `.jpeg`, `.png`, dan `.gif`.
+   - Mendukung format gambar: `.jpg`, `.jpeg`, `.png`, dan `.gif`
    - File dienkripsi menggunakan algoritma AES dengan mode **CBC (Cipher Block Chaining)**.
    - Menggunakan **IV (Initialization Vector)** acak untuk keamanan tambahan.
 
